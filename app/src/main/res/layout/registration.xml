@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/login_background_color"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
+
+    <TextView
+        android:text="@string/registration_title"
+        android:textSize="40dp"
+        android:textColor="@color/login_text_color"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/register_email"
+            android:hint="@string/email_placeholder"
+            android:textColorHint="@color/login_text_color"
+            android:textSize="25sp"
+            android:minWidth="300dp"
+            android:gravity="center"
+            android:textColor="@color/login_text_color"
+            android:layout_marginBottom="30dp"
+            android:inputType="textEmailAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/register_password"
+            android:hint="@string/password_placeholder"
+            android:textColorHint="@color/login_text_color"
+            android:textSize="25sp"
+            android:textColor="@color/login_text_color"
+            android:minWidth="300dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/registration_button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:minWidth="200dp"
+        android:text="@string/register"
+        android:textColor="@color/login_text_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

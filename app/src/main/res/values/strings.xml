@@ -3,4 +3,57 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="username_placeholder">Username</string>
+    <string name="password_placeholder">Password</string>
+    <string name="login">Login</string>
+    <string name="email_placeholder">Email</string>
+    <string name="register">Register</string>
+    <string name="registration_title">Registration</string>
+    <string name="authentication_title">Authentication</string>
+    <string name="authentication_placeholder">Authentication Code</string>
+    <string name="authentication_instructions">Put the Code We Sent to Your Email Here!</string>
+    <string name="invite_friends">Invite Friends</string>
+    <string name="messages">Messages</string>
+    <string name="achievements">Achievements</string>
+    <string name="recently_passed">Recently Passed</string>
+
+    <string name="example_achievement1_title">Hello Passing</string>
+    <string name="example_achievement2_title">Touristy Tourist</string>
+    <string name="example_achievement2_description">Pass Users of 3 Nationalities</string>
+    <string name="example_achievement3_title">Seasoned Veteran</string>
+    <string name="example_achievement3_description">Pass Users of 5 Nationalities</string>
+    <string name="example_achievement4_title">North American Conquest</string>
+    <string name="example_achievement4_description">Pass Users From Every Country In North America</string>
+    <string name="example_achievement1_description">Pass Somebody</string>
+    <string name="Achievements">Achievements</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="view_your_achievements">View Your Achievements</string>
+    <string name="example_pass_1">You passed Tori!</string>
+    <string name="example_pass_2">You passed Luke!</string>
+    <string name="example_pass_3">You passed Scott!</string>
+    <string name="example_pass_4">You passed Alex!</string>
+    <string name="tori">Tori</string>
+    <string name="luke">Luke</string>
+    <string name="scott">Scott</string>
+    <string name="alex">Alex</string>
+    <string name="invite_friends_instructions">Type in your friend\'s email!</string>
+    <string name="send">Send</string>
+    <string name="change_username">Change Username</string>
+    <string name="change_password">Change Password</string>
+    <string name="log_out">Log Out</string>
+    <string name="share">Share</string>
+    <string name="disable">Disable</string>
+    <string name="title_activity_recently_passed">RecentlyPassed</string>
+    <string name="title_activity_achievements_list">AchievementsListActivity</string>
+    <string name="title_activity_messages">MessagesActivity</string>
+    <string name="title_activity_invite_friends">InviteFriendsActivity</string>
+    <string name="title_activity_account_settings">AccountSettingsActivity</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="title_activity_authentication">AuthenticationActivity</string>
+    <string name="title_activity_achievement_map">AchievementMapActivity</string>
+
 </resources>

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="login_background_color">#09F</color>
+    <color name="login_text_color">#FFF</color>
+    <color name="login_button_color">#888</color>
+    <color name="account_settings_background">#0f0</color>
 </resources>
