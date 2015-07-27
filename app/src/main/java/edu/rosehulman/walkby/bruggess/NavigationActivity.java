@@ -1,12 +1,11 @@
 package edu.rosehulman.walkby.bruggess;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Toast;
 
 
 public class NavigationActivity extends Activity implements View.OnClickListener {
@@ -38,6 +37,11 @@ public class NavigationActivity extends Activity implements View.OnClickListener
         messagesButton.setOnClickListener(this);
         inviteFriendsButton.setOnClickListener(this);
         accountSettingsButton.setOnClickListener(this);
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
+
+        WalkbyBluetoothManager bluetoothManager = new WalkbyBluetoothManager(adapter);
+        bluetoothManager.connect(this);
     }
 
     @Override

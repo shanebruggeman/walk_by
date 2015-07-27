@@ -1,7 +1,5 @@
 package edu.rosehulman.walkby.bruggess;
 
-import android.os.Bundle;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
