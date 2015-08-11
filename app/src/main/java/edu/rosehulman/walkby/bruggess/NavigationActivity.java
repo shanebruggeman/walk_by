@@ -39,7 +39,6 @@ public class NavigationActivity extends Activity implements View.OnClickListener
         accountSettingsButton.setOnClickListener(this);
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
-
         WalkbyBluetoothManager bluetoothManager = new WalkbyBluetoothManager(adapter);
         bluetoothManager.connect(this);
     }

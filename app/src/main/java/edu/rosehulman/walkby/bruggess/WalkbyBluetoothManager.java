@@ -2,9 +2,12 @@ package edu.rosehulman.walkby.bruggess;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+
+import java.util.Set;
 
 /**
  * Created by shane.bruggeman on 7/26/15.
@@ -27,15 +30,42 @@ public class WalkbyBluetoothManager {
             return false;
         }
 
-        Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-        activity.startActivity(discoverableIntent);
-        establishConnection(activity);
+        if(!mBluetoothAdapter.isEnabled()) {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            activity.startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+        }
 
+        //check to see if user's mac address is already registered for them
+        String myMacAddress = mBluetoothAdapter.getAddress();
+
+        findDiscoverables();
         return true;
     }
 
-    public void establishConnection(Activity activity) {
-        //find and pair with bluetooth devices
+    public void refresh() {
+        findDiscoverables();
+    }
+
+    public void enableDiscovery(Activity activity) {
+        Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+        activity.startActivity(discoverableIntent);
+    }
+
+    public void findDiscoverables() {
+        Set<BluetoothDevice> visibleDevices = mBluetoothAdapter.getBondedDevices();
+        Log.d("log1", "My mac address is: " + mBluetoothAdapter.getAddress());
+
+        for(BluetoothDevice device : visibleDevices) {
+            String mac_address = device.getAddress();
+            String device_name = device.getName();
+            Log.d("log1", device_name + ": " + mac_address);
+        }
+
+        Log.d("log1","" + visibleDevices.size());
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("log1","requestCode: " + requestCode + "\nresultCode: " + resultCode);
     }
 }
