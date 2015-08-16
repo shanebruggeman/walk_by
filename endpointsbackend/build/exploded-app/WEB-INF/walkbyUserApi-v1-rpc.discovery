@@ -1,0 +1,348 @@
+{
+ "kind": "discovery#rpcDescription",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/eIlI6tnkS7eBuZWaVSHh0Xt5_IM\"",
+ "discoveryVersion": "v1",
+ "id": "walkbyUserApi:v1",
+ "name": "walkbyUserApi",
+ "version": "v1",
+ "description": "This is an API",
+ "ownerDomain": "backend.walkby.bruggeman.shane.example.com",
+ "ownerName": "backend.walkby.bruggeman.shane.example.com",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "protocol": "rpc",
+ "rootUrl": "https://walkby-1010.appspot.com/_ah/api/",
+ "rpcUrl": "https://walkby-1010.appspot.com/_ah/api/rpc",
+ "rpcPath": "/_ah/api/rpc",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/userinfo.email": {
+     "description": "View your email address"
+    }
+   }
+  }
+ },
+ "schemas": {
+  "WalkbyUser": {
+   "id": "WalkbyUser",
+   "type": "object",
+   "properties": {
+    "encounteredMacAddresses": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "macAddress": {
+     "type": "string"
+    },
+    "password": {
+     "type": "string"
+    },
+    "username": {
+     "type": "string"
+    }
+   }
+  },
+  "WalkbyUserCollection": {
+   "id": "WalkbyUserCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "WalkbyUser"
+     }
+    }
+   }
+  }
+ },
+ "methods": {
+  "walkbyUserApi.addEncounteredMacAddress": {
+   "id": "walkbyUserApi.addEncounteredMacAddress",
+   "parameters": {
+    "addedMac": {
+     "type": "string",
+     "required": true
+    },
+    "username": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "username",
+    "addedMac"
+   ],
+   "returns": {
+    "$ref": "WalkbyUser"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.addOwnMacAddress": {
+   "id": "walkbyUserApi.addOwnMacAddress",
+   "parameters": {
+    "ownMac": {
+     "type": "string",
+     "required": true
+    },
+    "username": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "username",
+    "ownMac"
+   ],
+   "returns": {
+    "$ref": "WalkbyUser"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.checkUsernamePassword": {
+   "id": "walkbyUserApi.checkUsernamePassword",
+   "parameters": {
+    "password": {
+     "type": "string",
+     "required": true
+    },
+    "username": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "username",
+    "password"
+   ],
+   "returns": {
+    "$ref": "WalkbyUser"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.get": {
+   "id": "walkbyUserApi.get",
+   "allowGet": true,
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "format": "int64"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "returns": {
+    "$ref": "WalkbyUser"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.getEncounteredUsers": {
+   "id": "walkbyUserApi.getEncounteredUsers",
+   "parameters": {
+    "username": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "username"
+   ],
+   "returns": {
+    "$ref": "WalkbyUserCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.insert": {
+   "id": "walkbyUserApi.insert",
+   "parameters": {
+    "resource": {
+     "$ref": "WalkbyUser"
+    }
+   },
+   "parameterOrder": [
+    "resource"
+   ],
+   "returns": {
+    "$ref": "WalkbyUser"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.list": {
+   "id": "walkbyUserApi.list",
+   "allowGet": true,
+   "parameters": {
+    "cursor": {
+     "type": "string"
+    },
+    "limit": {
+     "type": "integer",
+     "format": "int32"
+    }
+   },
+   "returns": {
+    "$ref": "WalkbyUserCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.patch": {
+   "id": "walkbyUserApi.patch",
+   "supportsPatch": true,
+   "parameters": {
+    "encounteredMacAddresses": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "macAddress": {
+     "type": "string"
+    },
+    "password": {
+     "type": "string"
+    },
+    "username": {
+     "type": "string"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "returns": {
+    "$ref": "WalkbyUser"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.remove": {
+   "id": "walkbyUserApi.remove",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "format": "int64"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.update": {
+   "id": "walkbyUserApi.update",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "format": "int64"
+    },
+    "resource": {
+     "$ref": "WalkbyUser"
+    }
+   },
+   "parameterOrder": [
+    "resource",
+    "id"
+   ],
+   "returns": {
+    "$ref": "WalkbyUser"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.userGetByUsername": {
+   "id": "walkbyUserApi.userGetByUsername",
+   "parameters": {
+    "username": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "username"
+   ],
+   "returns": {
+    "$ref": "WalkbyUser"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  }
+ }
+}
