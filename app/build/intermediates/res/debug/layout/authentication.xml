@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/login_background_color"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
+
+    <TextView
+        android:text="@string/authentication_title"
+        android:textSize="40sp"
+        android:textColor="@color/login_text_color"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/authentication_instructions"
+            android:text="@string/authentication_instructions"
+            android:textColor="@color/login_text_color"
+            android:textSize="30sp"
+            android:minWidth="300dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/authentication_code"
+            android:hint="@string/authentication_placeholder"
+            android:textColorHint="@color/login_text_color"
+            android:textSize="25sp"
+            android:textColor="@color/login_text_color"
+            android:minWidth="300dp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/authentication_button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:minWidth="200dp"
+        android:backgroundTint="@color/login_button_color"
+        android:text="@string/register"
+        android:textColor="@color/login_text_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
+<!-- From: file:/Users/shane.bruggeman/AndroidDev/walk_by/app/src/main/res/layout/authentication.xml -->
