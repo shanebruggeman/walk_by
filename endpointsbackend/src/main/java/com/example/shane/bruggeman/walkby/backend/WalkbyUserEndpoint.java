@@ -109,18 +109,145 @@ public class WalkbyUserEndpoint {
     }
 
     @ApiMethod(
-            name = "addMacAddress",
-            path = "walkbyUser/mac/{id}/{addedMac}",
+            name = "addEncounteredMacAddress",
+            path = "walkbyUser/mac/{username}/{addedMac}",
             httpMethod = ApiMethod.HttpMethod.PUT)
-    public WalkbyUser addMacAddress(@Named("id") Long id,
-                                    @Named("addedMac") String addedMac,
-                                    WalkbyUser walkbyUser) throws NotFoundException {
-        checkExists(id);
-        walkbyUser.addMacAddress(addedMac);
+    public WalkbyUser addEncounteredMacAddress(@Named("username") String username,
+                                               @Named("addedMac") String addedMac) throws NotFoundException {
 
-        ofy().save().entity(walkbyUser).now();
-        logger.info("Updated WalkbyUser's mac addresses: " + walkbyUser);
-        return ofy().load().entity(walkbyUser).now();
+        checkUsernameExists(username);
+
+        List<WalkbyUser> allUsers = ofy().load().type(WalkbyUser.class).list();
+        boolean addedMacIsInUsers = false;
+
+        WalkbyUser otherWalkbyUser = null;
+
+        for(WalkbyUser firstIterationUser : allUsers) {
+            if(firstIterationUser.getMacAddress().equals(addedMac)) {
+                addedMacIsInUsers = true;
+                otherWalkbyUser = firstIterationUser;
+            }
+        }
+
+        for(WalkbyUser walkbyUser : allUsers) {
+            if(walkbyUser.getUsername().equalsIgnoreCase(username)) {
+                if(!addedMacIsInUsers) {
+                    return walkbyUser;
+                }
+
+                List<String> macEncounters = walkbyUser.getEncounteredMacAddresses();
+                List<String> otherUserMacEncounters = otherWalkbyUser.getEncounteredMacAddresses();
+
+                if(macEncounters == null) {
+                    macEncounters = new ArrayList<String>();
+                }
+
+                if(otherUserMacEncounters == null) {
+                    otherUserMacEncounters = new ArrayList<String>();
+                }
+
+                //exchange macAddresses here
+                if(!macEncounters.contains(addedMac)) {
+                    macEncounters.add(addedMac);
+                    otherUserMacEncounters.add(walkbyUser.getMacAddress());
+                } else {
+                    return walkbyUser;
+                }
+
+                ofy().save().entity(walkbyUser).now();
+                ofy().save().entity(otherWalkbyUser).now();
+                return ofy().load().entity(walkbyUser).now();
+            }
+        }
+
+        return null;
+    }
+
+    @ApiMethod(
+            name = "addOwnMacAddress",
+            path = "walkbyUser/mac/{username}/own/{ownMac}",
+            httpMethod = ApiMethod.HttpMethod.PUT)
+    public WalkbyUser addOwnMacAddress(@Named("username") String username,
+                                       @Named("ownMac") String ownMac) throws Exception {
+
+        List<WalkbyUser> allUsers = ofy().load().type(WalkbyUser.class).list();
+        for(WalkbyUser walkbyUser : allUsers) {
+            if(walkbyUser.getUsername().equalsIgnoreCase(username)) {
+                walkbyUser.setMacAddress(ownMac);
+                ofy().save().entity(walkbyUser).now();
+                return ofy().load().entity(walkbyUser).now();
+            }
+        }
+
+        throw new Exception("Could not find a user with the username " + username);
+    }
+
+    @ApiMethod(
+            name = "getEncounteredUsers",
+            path = "walkbyUser/mac/encountered/{username}",
+            httpMethod = ApiMethod.HttpMethod.PUT)
+    public Collection<WalkbyUser> getEncounteredUsers(@Named("username") String username) throws Exception {
+
+        List<WalkbyUser> encounteredUsers = new ArrayList<WalkbyUser>();
+        WalkbyUser currentUser = null;
+
+        List<WalkbyUser> allUsers = ofy().load().type(WalkbyUser.class).list();
+        for(WalkbyUser walkbyUser : allUsers) {
+            if(walkbyUser.getUsername().equalsIgnoreCase(username)) {
+                currentUser = walkbyUser;
+            }
+        }
+
+        if(currentUser == null) {
+            throw new Exception("Could not find a user with username " + username);
+        }
+
+        for(WalkbyUser otherWalkbyUser : allUsers) {
+            String otherMacAddress = otherWalkbyUser.getMacAddress();
+            if(otherWalkbyUser.getUsername().equals(username)) {
+                continue;
+            }
+            for(String encounteredMac : currentUser.getEncounteredMacAddresses()) {
+                if(otherMacAddress.equals(encounteredMac)) {
+                    encounteredUsers.add(otherWalkbyUser);
+                }
+            }
+        }
+
+        return encounteredUsers;
+    }
+
+    @ApiMethod(
+            name = "userGetByUsername",
+            path = "walkbyUser/{username}/id",
+            httpMethod = ApiMethod.HttpMethod.PUT)
+    public WalkbyUser userGetId(@Named("username") String username) throws Exception {
+        List<WalkbyUser> users = ofy().load().type(WalkbyUser.class).list();
+
+        for(WalkbyUser walkbyUser : users) {
+            if(walkbyUser.getUsername().equalsIgnoreCase(username)) {
+                return walkbyUser;
+            }
+        }
+
+        return null;
+    }
+
+    @ApiMethod(
+            name = "checkUsernamePassword",
+            path = "walkbyUser/{username}/{password}",
+            httpMethod = ApiMethod.HttpMethod.PUT)
+    public WalkbyUser checkUsernamePassword(@Named("username") String username,
+                                            @Named("password") String password) throws Exception {
+        List<WalkbyUser> users = ofy().load().type(WalkbyUser.class).list();
+
+        for(WalkbyUser walkbyUser : users) {
+            if(walkbyUser.getUsername().equalsIgnoreCase(username) && walkbyUser.getPassword().equalsIgnoreCase(password)) {
+                return walkbyUser;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -164,6 +291,19 @@ public class WalkbyUserEndpoint {
         }
 
         return walkbyUserList;
+    }
+
+    private void checkUsernameExists(String username) throws NotFoundException {
+        try {
+            List<WalkbyUser> walkbyUsers = ofy().load().type(WalkbyUser.class).list();
+            for(WalkbyUser user : walkbyUsers) {
+                if (user.getUsername().equalsIgnoreCase(username)) {
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            throw new NotFoundException("Could not find WalkbyUser with username " + username);
+        }
     }
 
     private void checkExists(Long id) throws NotFoundException {

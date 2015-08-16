@@ -6,10 +6,7 @@
         <init-param>
             <param-name>services</param-name>
             <param-value>
-                com.example.shane.bruggeman.walkby.backend.WalkbyUserEndpoint,
-                com.example.shane.bruggeman.walkby.backend.apis.WalkbyMessageEndpoint,
-                com.example.shane.bruggeman.walkby.backend.apis.WalkbyConversationEndpoint,
-                com.example.shane.bruggeman.walkby.backend.apis.WalkbyAchievementEndpoint</param-value>
+                com.example.shane.bruggeman.walkby.backend.WalkbyUserEndpoint</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

@@ -17,6 +17,11 @@ import edu.rosehulman.walkby.bruggess.LoginActivity;
 
 public class UpdateUserAsyncTask extends AsyncTask<HashMap<Long,List<String>>, Void, Void> {
     private static WalkbyUserApi myApiService = null;
+    private UserUpdateCallback callback;
+
+    public UpdateUserAsyncTask(UserUpdateCallback callback) {
+        this.callback = callback;
+    }
 
     @Override
     protected Void doInBackground(HashMap<Long,List<String>>... params) {

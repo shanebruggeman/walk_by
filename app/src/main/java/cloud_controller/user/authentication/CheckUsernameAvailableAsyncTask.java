@@ -32,11 +32,7 @@ public class CheckUsernameAvailableAsyncTask extends AsyncTask<String, Void, Boo
 
         try {
             Log.d(LoginActivity.DEBUG_KEY, "searching for user " + username);
-//            return (myApiService.userExists(username).execute() == null);
-            if(false) {
-                throw new IOException("Yea");
-            }
-            return true;
+            return (myApiService.userGetByUsername(username).execute()) == null;
         } catch(IOException e) {
             Log.d(LoginActivity.DEBUG_KEY, "Update failed" + e.getMessage());
         }

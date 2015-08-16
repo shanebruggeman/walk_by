@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class NavigationActivity extends Activity implements View.OnClickListener {
 
@@ -17,7 +20,7 @@ public class NavigationActivity extends Activity implements View.OnClickListener
     Button accountSettingsButton;
 
     WalkbyBluetoothManager bluetoothManager;
-    Long userId;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +44,24 @@ public class NavigationActivity extends Activity implements View.OnClickListener
         inviteFriendsButton.setOnClickListener(this);
         accountSettingsButton.setOnClickListener(this);
 
+        Intent myIntent = getIntent();
+        username = myIntent.getStringExtra(LoginActivity.USERNAME_KEY);
+
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
-        bluetoothManager = new WalkbyBluetoothManager(adapter);
+        bluetoothManager = new WalkbyBluetoothManager(adapter, username);
         bluetoothManager.connect(this);
-        bluetoothManager.refresh();
+
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                bluetoothManager.refresh();
+
+            }
+        };
+
+        //continually refresh every ten seconds
+        timer.schedule(timerTask, 0, 10000);
     }
 
     @Override
@@ -52,9 +69,8 @@ public class NavigationActivity extends Activity implements View.OnClickListener
         int test = 0;
         switch(v.getId()) {
             case R.id.navigation_recently_passed_button:
-//                Intent recentlyPassedIntent = new Intent(this, RecentlyPassedActivity.class);
-//                startActivity(recentlyPassedIntent);
-                bluetoothManager.refresh();
+                Intent recentlyPassedIntent = new Intent(this, RecentlyPassedActivity.class);
+                startActivity(recentlyPassedIntent);
                 break;
             case R.id.navigation_achievements_list_button:
                 Intent achievementsIntent = new Intent(this, AchievementsListActivity.class);

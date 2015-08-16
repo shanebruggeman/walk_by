@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.shane.bruggeman.walkby.backend.walkbyUserApi.model.WalkbyUser;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -22,13 +23,18 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import cloud_controller.user.authentication.AuthenticateUserAsyncTask;
 import cloud_controller.user.authentication.UserAuthenticationCallback;
+import cloud_controller.user.crud_operations.ListUserAsyncTask;
+import cloud_controller.user.crud_operations.UserAddMacAddressAsyncTask;
+import cloud_controller.user.crud_operations.UserListCallback;
 
-public class LoginActivity extends Activity implements View.OnClickListener, UserAuthenticationCallback {
+public class LoginActivity extends Activity implements View.OnClickListener, UserAuthenticationCallback, UserListCallback {
 
     public static String DEBUG_KEY = "log1";
+    public static String USERNAME_KEY = "USERNAME_KEY";
 
     private EditText mUsernameField;
     private EditText mPasswordField;
@@ -96,6 +102,8 @@ public class LoginActivity extends Activity implements View.OnClickListener, Use
             Toast.makeText(this, "No Internet Connection Available", Toast.LENGTH_LONG).show();
         }
 
+        (new ListUserAsyncTask(this)).execute();
+
 //        getRegistrationId();
 //        pickUserAccount(); //for authenticating with google
     }
@@ -103,6 +111,8 @@ public class LoginActivity extends Activity implements View.OnClickListener, Use
     private void authenticateLogin() {
         Log.d(DEBUG_KEY, "Authorization granted");
         Intent navigationIntent = new Intent(this, NavigationActivity.class);
+        navigationIntent.putExtra(USERNAME_KEY, getUsernameField());
+
         startActivity(navigationIntent);
     }
 
@@ -126,7 +136,10 @@ public class LoginActivity extends Activity implements View.OnClickListener, Use
                 startActivity(registrationIntent);
                 break;
             case R.id.google_login_button:
-                Toast.makeText(this, "Gooogle Login is coming soon!", Toast.LENGTH_SHORT).show();
+                String fakeLong = "5634472569470976";
+                String fakeMac  = "fakeMac";
+
+                (new UserAddMacAddressAsyncTask()).execute(fakeLong, fakeMac);
                 break;
             default:
                 break;
@@ -185,6 +198,11 @@ public class LoginActivity extends Activity implements View.OnClickListener, Use
                 Toast.makeText(this, "You are not online!!", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public void userListCallback(ArrayList<WalkbyUser> walkbyUsers) {
+        Log.d(LoginActivity.DEBUG_KEY, "Size of walkbyUsers is " + walkbyUsers.size());
     }
 
     public class GetUsernameTask extends AsyncTask {

@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.shane.bruggeman.walkby.backend.walkbyUserApi.WalkbyUserApi;
+import com.example.shane.bruggeman.walkby.backend.walkbyUserApi.model.WalkbyUser;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
@@ -29,7 +30,11 @@ public class InsertUserAsyncTask extends AsyncTask<String, Void, Void> {
 
         try {
             Log.d(LoginActivity.DEBUG_KEY, "Inserting " + username + ", " + password + ", " + macAddress);
-//            myApiService.userInsert(username, password, macAddress).execute();
+            WalkbyUser inserted = new WalkbyUser();
+            inserted.setUsername(username);
+            inserted.setPassword(password);
+            inserted.setMacAddress(macAddress);
+            myApiService.insert(inserted).execute();
             if(false) {
                 throw new IOException("Yep");
             }

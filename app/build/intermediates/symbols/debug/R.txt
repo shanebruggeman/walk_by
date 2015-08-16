@@ -775,7 +775,7 @@ int menu menu_registration 0x7f0e0009
 int mipmap ic_action_navigation_arrow_forward 0x7f030000
 int mipmap ic_launcher 0x7f030001
 int raw gtm_analytics 0x7f060000
-int raw world_borders 0x7f060001
+int raw worldborders 0x7f060001
 int string Achievements 0x7f070038
 int string abc_action_bar_home_description 0x7f070000
 int string abc_action_bar_home_description_format 0x7f070039

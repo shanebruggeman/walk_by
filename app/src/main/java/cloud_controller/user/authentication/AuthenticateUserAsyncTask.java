@@ -33,12 +33,8 @@ public class AuthenticateUserAsyncTask extends AsyncTask<String, Void, Boolean> 
 
         try {
             Log.d(LoginActivity.DEBUG_KEY, "searching for user " + username + " with password " + password);
-//            return (myApiService.userIsAuthorized(username, password).execute() != null);
-//            myApiService.user
-            if(false) {
-                throw new IOException("Because");
-            }
-            return true;
+            boolean response = (myApiService.checkUsernamePassword(username, password).execute()) != null;
+            return  response;
         } catch(IOException e) {
             Log.d(LoginActivity.DEBUG_KEY, "Update failed" + e.getMessage());
         }
@@ -48,7 +44,7 @@ public class AuthenticateUserAsyncTask extends AsyncTask<String, Void, Boolean> 
 
     @Override
     protected void onPostExecute(Boolean response) {
-        Log.d(LoginActivity.DEBUG_KEY, "Response was " + response);
+        Log.d(LoginActivity.DEBUG_KEY, "Username and password accepted: " + response);
         callback.finishAuth(response);
     }
 }
