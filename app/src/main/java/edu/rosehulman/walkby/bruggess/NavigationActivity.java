@@ -16,6 +16,9 @@ public class NavigationActivity extends Activity implements View.OnClickListener
     Button inviteFriendsButton;
     Button accountSettingsButton;
 
+    WalkbyBluetoothManager bluetoothManager;
+    Long userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +42,9 @@ public class NavigationActivity extends Activity implements View.OnClickListener
         accountSettingsButton.setOnClickListener(this);
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
-        WalkbyBluetoothManager bluetoothManager = new WalkbyBluetoothManager(adapter);
+        bluetoothManager = new WalkbyBluetoothManager(adapter);
         bluetoothManager.connect(this);
+        bluetoothManager.refresh();
     }
 
     @Override
@@ -48,8 +52,9 @@ public class NavigationActivity extends Activity implements View.OnClickListener
         int test = 0;
         switch(v.getId()) {
             case R.id.navigation_recently_passed_button:
-                Intent recentlyPassedIntent = new Intent(this, RecentlyPassedActivity.class);
-                startActivity(recentlyPassedIntent);
+//                Intent recentlyPassedIntent = new Intent(this, RecentlyPassedActivity.class);
+//                startActivity(recentlyPassedIntent);
+                bluetoothManager.refresh();
                 break;
             case R.id.navigation_achievements_list_button:
                 Intent achievementsIntent = new Intent(this, AchievementsListActivity.class);
@@ -66,8 +71,6 @@ public class NavigationActivity extends Activity implements View.OnClickListener
             case R.id.navigation_account_settings_button:
                 Intent accountSettingsIntent = new Intent(this, AccountSettingsActivity.class);
                 startActivity(accountSettingsIntent);
-                break;
-            default:
                 break;
         }
     }

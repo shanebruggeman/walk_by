@@ -37,6 +37,7 @@
         <EditText
             android:id="@+id/register_password"
             android:hint="@string/password_placeholder"
+            android:inputType="textPassword"
             android:textColorHint="@color/login_text_color"
             android:textSize="25sp"
             android:textColor="@color/login_text_color"

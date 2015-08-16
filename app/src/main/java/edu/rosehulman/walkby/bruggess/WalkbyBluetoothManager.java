@@ -14,7 +14,6 @@ import java.util.Set;
  */
 public class WalkbyBluetoothManager {
     private BluetoothAdapter mBluetoothAdapter;
-    private String BLUETOOTH_DEBUG = "BLUETOOTH_DEBUG";
     private int REQUEST_ENABLE_BT = 1;
     private ArrayAdapter mArrayAdapter;
 
@@ -26,7 +25,7 @@ public class WalkbyBluetoothManager {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (mBluetoothAdapter == null) {
-            Log.d(BLUETOOTH_DEBUG, "This device does not support bluetooth");
+            Log.d(LoginActivity.DEBUG_KEY, "This device does not support bluetooth");
             return false;
         }
 
@@ -37,13 +36,26 @@ public class WalkbyBluetoothManager {
 
         //check to see if user's mac address is already registered for them
         String myMacAddress = mBluetoothAdapter.getAddress();
-
-        findDiscoverables();
         return true;
     }
 
-    public void refresh() {
-        findDiscoverables();
+    public boolean refresh() {
+        return findDiscoverables();
+    }
+
+    private boolean findDiscoverables() {
+        Set<BluetoothDevice> visibleDevices = mBluetoothAdapter.getBondedDevices();
+        Log.d(LoginActivity.DEBUG_KEY, "My mac address is: " + mBluetoothAdapter.getAddress());
+
+        for(BluetoothDevice device : visibleDevices) {
+            String mac_address = device.getAddress();
+            String device_name = device.getName();
+            Log.d(LoginActivity.DEBUG_KEY, device_name + ": " + mac_address);
+        }
+
+        Log.d(LoginActivity.DEBUG_KEY,"Around me there are " + visibleDevices.size() + " visible devices");
+
+        return (visibleDevices.size() > 0);
     }
 
     public void enableDiscovery(Activity activity) {
@@ -52,20 +64,7 @@ public class WalkbyBluetoothManager {
         activity.startActivity(discoverableIntent);
     }
 
-    public void findDiscoverables() {
-        Set<BluetoothDevice> visibleDevices = mBluetoothAdapter.getBondedDevices();
-        Log.d("log1", "My mac address is: " + mBluetoothAdapter.getAddress());
-
-        for(BluetoothDevice device : visibleDevices) {
-            String mac_address = device.getAddress();
-            String device_name = device.getName();
-            Log.d("log1", device_name + ": " + mac_address);
-        }
-
-        Log.d("log1","" + visibleDevices.size());
-    }
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("log1","requestCode: " + requestCode + "\nresultCode: " + resultCode);
+        Log.d(LoginActivity.DEBUG_KEY,"requestCode: " + requestCode + "\nresultCode: " + resultCode);
     }
 }
