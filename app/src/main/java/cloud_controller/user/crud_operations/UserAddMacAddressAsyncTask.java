@@ -27,7 +27,8 @@ public class UserAddMacAddressAsyncTask extends AsyncTask<String, Void, Void> {
         String macAddress = params[1];
 
         try {
-            Log.d(LoginActivity.DEBUG_KEY, "Calling endpoint to add encountered mac address " + macAddress);
+            Log.d(LoginActivity.DEBUG_KEY, "Calling endpoint to add encountered mac address for user " + username + ": " + macAddress);
+            Log.d(LoginActivity.DEBUG_KEY, "myApi is null: " + (myApiService == null));
             myApiService.addEncounteredMacAddress(username, macAddress).execute();
         } catch (IOException e) {
             Log.d(LoginActivity.DEBUG_KEY, "Inserting mac address failed! " + e.getMessage());

@@ -3,15 +3,23 @@ package com.example.shane.bruggeman.walkby.backend.models;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
+import java.util.ArrayList;
+
 @Entity
 public class WalkbyConversation {
 
     @Id
     Long id;
 
-    //walkbyusers
     Long conversationStarterId;
     Long conversationReceiverId;
+
+    ArrayList<WalkbyMessage> messages = new ArrayList<WalkbyMessage>();
+
+
+    public Long getId() {
+        return id;
+    }
 
     public Long getConversationStarterId() {
         return conversationStarterId;
@@ -29,7 +37,11 @@ public class WalkbyConversation {
         this.conversationReceiverId = conversationReceiverId;
     }
 
-    public Long getId() {
-        return id;
+    public ArrayList<WalkbyMessage> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<WalkbyMessage> messages) {
+        this.messages = messages;
     }
 }

@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.shane.bruggeman.walkby.backend.walkbyUserApi.WalkbyUserApi;
+import com.example.shane.bruggeman.walkby.backend.walkbyUserApi.model.WalkbyUser;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
@@ -11,11 +12,16 @@ import java.io.IOException;
 
 import edu.rosehulman.walkby.bruggess.LoginActivity;
 
-public class UserGetByUsernameAsyncTask extends AsyncTask<String, Void, Long> {
+public class UserGetByUsernameAsyncTask extends AsyncTask<String, Void, WalkbyUser> {
     private static WalkbyUserApi myApiService = null;
+    private UserRetrievedCallback callback;
+
+    public UserGetByUsernameAsyncTask(UserRetrievedCallback callback) {
+        this.callback = callback;
+    }
 
     @Override
-    protected Long doInBackground(String... params) {
+    protected WalkbyUser doInBackground(String... params) {
         if(myApiService == null) {  // Only do this once
             WalkbyUserApi.Builder builder = new WalkbyUserApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
                     .setRootUrl("https://walkby-1010.appspot.com/_ah/api/");
@@ -26,7 +32,7 @@ public class UserGetByUsernameAsyncTask extends AsyncTask<String, Void, Long> {
         String username = params[0];
 
         try {
-            return myApiService.userGetByUsername(username).execute().getId();
+            return myApiService.userGetByUsername(username).execute();
         } catch (IOException e) {
             Log.d(LoginActivity.DEBUG_KEY, "Inserting mac address failed! " + e.getMessage());
         }
@@ -35,7 +41,7 @@ public class UserGetByUsernameAsyncTask extends AsyncTask<String, Void, Long> {
     }
 
     @Override
-    protected void onPostExecute(Long aLong) {
-        Log.d(LoginActivity.DEBUG_KEY, "User with given username had id of " + aLong);
+    protected void onPostExecute(WalkbyUser user) {
+        callback.userHasBeenRetrieved(user);
     }
 }

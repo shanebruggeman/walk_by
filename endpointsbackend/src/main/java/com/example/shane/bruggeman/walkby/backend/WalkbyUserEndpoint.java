@@ -1,9 +1,12 @@
 package com.example.shane.bruggeman.walkby.backend;
 
+import com.example.shane.bruggeman.walkby.backend.models.WalkbyConversation;
+import com.example.shane.bruggeman.walkby.backend.models.WalkbyMessage;
 import com.example.shane.bruggeman.walkby.backend.models.WalkbyUser;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
@@ -45,7 +48,9 @@ public class WalkbyUserEndpoint {
 
     static {
         // Typically you would register this inside an OfyServive wrapper. See: https://code.google.com/p/objectify-appengine/wiki/BestPractices
+        ObjectifyService.register(WalkbyConversation.class);
         ObjectifyService.register(WalkbyUser.class);
+        ObjectifyService.register(WalkbyMessage.class);
     }
 
     /**
@@ -110,57 +115,45 @@ public class WalkbyUserEndpoint {
 
     @ApiMethod(
             name = "addEncounteredMacAddress",
-            path = "walkbyUser/mac/{username}/{addedMac}",
+            path = "walkbyUser/macaddressing/{username}/{addedMac}",
             httpMethod = ApiMethod.HttpMethod.PUT)
     public WalkbyUser addEncounteredMacAddress(@Named("username") String username,
                                                @Named("addedMac") String addedMac) throws NotFoundException {
-
         checkUsernameExists(username);
 
-        List<WalkbyUser> allUsers = ofy().load().type(WalkbyUser.class).list();
-        boolean addedMacIsInUsers = false;
+        List<WalkbyUser> users = ofy().load().type(WalkbyUser.class).list();
+        WalkbyUser currentUser = users.get(0);
 
-        WalkbyUser otherWalkbyUser = null;
-
-        for(WalkbyUser firstIterationUser : allUsers) {
-            if(firstIterationUser.getMacAddress().equals(addedMac)) {
-                addedMacIsInUsers = true;
-                otherWalkbyUser = firstIterationUser;
+        for(int i = 0; i < users.size(); i++) {
+            currentUser = users.get(i);
+            String currentUsername = currentUser.getUsername();
+            if(currentUsername.equalsIgnoreCase(username)) {
+                if(currentUser.getEncounteredMacAddresses() == null) {
+                    currentUser.setEncounteredMacAddresses(new ArrayList<String>());
+                }
+                if(!currentUser.getEncounteredMacAddresses().contains(addedMac)) {
+                    currentUser.addMacAddress(addedMac);
+                }
+                break;
             }
         }
 
-        for(WalkbyUser walkbyUser : allUsers) {
-            if(walkbyUser.getUsername().equalsIgnoreCase(username)) {
-                if(!addedMacIsInUsers) {
-                    return walkbyUser;
+        for(int j = 0; j < users.size(); j++) {
+            WalkbyUser possibleMatch = users.get(j);
+            if(possibleMatch.getMacAddress().equals(addedMac)) {
+                if(possibleMatch.getEncounteredMacAddresses() == null) {
+                    possibleMatch.setEncounteredMacAddresses(new ArrayList<String>());
                 }
-
-                List<String> macEncounters = walkbyUser.getEncounteredMacAddresses();
-                List<String> otherUserMacEncounters = otherWalkbyUser.getEncounteredMacAddresses();
-
-                if(macEncounters == null) {
-                    macEncounters = new ArrayList<String>();
+                if(!possibleMatch.getEncounteredMacAddresses().contains(addedMac)) {
+                    possibleMatch.addMacAddress(addedMac);
                 }
-
-                if(otherUserMacEncounters == null) {
-                    otherUserMacEncounters = new ArrayList<String>();
-                }
-
-                //exchange macAddresses here
-                if(!macEncounters.contains(addedMac)) {
-                    macEncounters.add(addedMac);
-                    otherUserMacEncounters.add(walkbyUser.getMacAddress());
-                } else {
-                    return walkbyUser;
-                }
-
-                ofy().save().entity(walkbyUser).now();
-                ofy().save().entity(otherWalkbyUser).now();
-                return ofy().load().entity(walkbyUser).now();
+                ofy().save().entity(possibleMatch).now();
+                break;
             }
         }
 
-        return null;
+        ofy().save().entity(currentUser).now();
+        return ofy().load().entity(currentUser).now();
     }
 
     @ApiMethod(
@@ -294,15 +287,209 @@ public class WalkbyUserEndpoint {
     }
 
     private void checkUsernameExists(String username) throws NotFoundException {
-        try {
-            List<WalkbyUser> walkbyUsers = ofy().load().type(WalkbyUser.class).list();
-            for(WalkbyUser user : walkbyUsers) {
-                if (user.getUsername().equalsIgnoreCase(username)) {
-                    return;
-                }
+        List<WalkbyUser> walkbyUsers = ofy().load().type(WalkbyUser.class).list();
+
+        for(WalkbyUser user : walkbyUsers) {
+            if (user.getUsername().equalsIgnoreCase(username)) {
+                return;
             }
-        } catch (Exception e) {
-            throw new NotFoundException("Could not find WalkbyUser with username " + username);
+        }
+        throw new NotFoundException("Could not verify username " + username + "!");
+    }
+
+    //******************************************************************************************
+    //******************************************************************************************
+    //************************************** Conversation **************************************
+    //******************************************************************************************
+    //******************************************************************************************
+
+    /**
+     * Returns the {@link WalkbyConversation} with the corresponding ID.
+     *
+     * @param id the ID of the entity to be retrieved
+     * @return the entity with the corresponding ID
+     * @throws NotFoundException if there is no {@code WalkbyConversation} with the provided ID.
+     */
+    @ApiMethod(
+            name = "getConversation",
+            path = "walkbyConversation/{id}",
+            httpMethod = ApiMethod.HttpMethod.GET)
+    public WalkbyConversation getConversation(@Named("id") Long id) throws NotFoundException {
+        logger.info("Getting WalkbyConversation with ID: " + id);
+        WalkbyConversation walkbyConversation = ofy().load().type(WalkbyConversation.class).id(id).now();
+        if (walkbyConversation == null) {
+            throw new NotFoundException("Could not find WalkbyConversation with ID: " + id);
+        }
+        return walkbyConversation;
+    }
+
+    /**
+     * Inserts a new {@code WalkbyConversation}.
+     */
+    @ApiMethod(
+            name = "insertConversation",
+            path = "walkbyConversation",
+            httpMethod = ApiMethod.HttpMethod.POST)
+    public WalkbyConversation insertConversation(WalkbyConversation walkbyConversation) {
+        // Typically in a RESTful API a POST does not have a known ID (assuming the ID is used in the resource path).
+        // You should validate that walkbyConversation.id has not been set. If the ID type is not supported by the
+        // Objectify ID generator, e.g. long or String, then you should generate the unique ID yourself prior to saving.
+        //
+        // If your client provides the ID then you should probably use PUT instead.
+        ofy().save().entity(walkbyConversation).now();
+        logger.info("Created WalkbyConversation with ID: " + walkbyConversation.getId());
+
+        return ofy().load().entity(walkbyConversation).now();
+    }
+
+    /**
+     * Updates an existing {@code WalkbyConversation}.
+     *
+     * @param id                 the ID of the entity to be updated
+     * @param walkbyConversation the desired state of the entity
+     * @return the updated version of the entity
+     * @throws NotFoundException if the {@code id} does not correspond to an existing
+     *                           {@code WalkbyConversation}
+     */
+    @ApiMethod(
+            name = "updateConversation",
+            path = "walkbyConversation/{id}",
+            httpMethod = ApiMethod.HttpMethod.PUT)
+    public WalkbyConversation updateConversation(@Named("id") Long id, WalkbyConversation walkbyConversation) throws NotFoundException {
+        // TODO: You should validate your ID parameter against your resource's ID here.
+        checkExistsConversation(id);
+        ofy().save().entity(walkbyConversation).now();
+        logger.info("Updated WalkbyConversation: " + walkbyConversation);
+        return ofy().load().entity(walkbyConversation).now();
+    }
+
+    /**
+     * Deletes the specified {@code WalkbyConversation}.
+     *
+     * @param id the ID of the entity to delete
+     * @throws NotFoundException if the {@code id} does not correspond to an existing
+     *                           {@code WalkbyConversation}
+     */
+    @ApiMethod(
+            name = "removeConversation",
+            path = "walkbyConversation/{id}",
+            httpMethod = ApiMethod.HttpMethod.DELETE)
+    public void removeConversation(@Named("id") Long id) throws NotFoundException {
+        checkExistsConversation(id);
+        ofy().delete().type(WalkbyConversation.class).id(id).now();
+        logger.info("Deleted WalkbyConversation with ID: " + id);
+    }
+
+    @ApiMethod(
+            name = "listConversations",
+            path = "walkbyConversation",
+            httpMethod = ApiMethod.HttpMethod.GET)
+    public CollectionResponse<WalkbyConversation> listConversations(@Nullable @Named("cursor") String cursor, @Nullable @Named("limit") Integer limit) {
+        limit = limit == null ? DEFAULT_LIST_LIMIT : limit;
+        Query<WalkbyConversation> query = ofy().load().type(WalkbyConversation.class).limit(limit);
+        if (cursor != null) {
+            query = query.startAt(Cursor.fromWebSafeString(cursor));
+        }
+        QueryResultIterator<WalkbyConversation> queryIterator = query.iterator();
+        List<WalkbyConversation> walkbyConversationList = new ArrayList<WalkbyConversation>(limit);
+        while (queryIterator.hasNext()) {
+            walkbyConversationList.add(queryIterator.next());
+        }
+        return CollectionResponse.<WalkbyConversation>builder().setItems(walkbyConversationList).setNextPageToken(queryIterator.getCursor().toWebSafeString()).build();
+    }
+
+    @ApiMethod(
+            name = "getUserConversations",
+            path = "walkbyConversations/{username}",
+            httpMethod = ApiMethod.HttpMethod.GET)
+    public Collection<WalkbyConversation> getUserConversations(@Named("username") String username) {
+        List<WalkbyConversation> conversations = ofy().load().type(WalkbyConversation.class).list();
+        Long userId = null;
+        List<WalkbyUser> allUsers = ofy().load().type(WalkbyUser.class).list();
+
+        for(WalkbyUser user : allUsers) {
+            String currentUsername = user.getUsername();
+            if(username.equalsIgnoreCase(currentUsername)) {
+                userId = user.getId();
+            }
+        }
+
+        List<WalkbyConversation> matches = new ArrayList<WalkbyConversation>();
+
+        for(WalkbyConversation conversation : conversations) {
+            Long starter = conversation.getConversationStarterId();
+            Long receiver = conversation.getConversationReceiverId();
+            if(userId.equals(starter) || (userId.equals(receiver))) {
+                matches.add(conversation);
+            }
+        }
+
+        return matches;
+    }
+
+    @ApiMethod(
+            name = "getConversationMessages",
+            path = "walkbyMessages/conversationmessages/{conversationId}",
+            httpMethod = ApiMethod.HttpMethod.GET)
+    public List<WalkbyMessage> getConversationMessages(@Named("conversationId") Long conversationId) throws Exception {
+        if(conversationId == null) {
+            throw new Exception("conversationId is null on messages retrieval!");
+        }
+
+        List<WalkbyMessage> messages = ofy().load().type(WalkbyMessage.class).list();
+        if(messages == null) {
+            throw new Exception("messages are null!");
+        }
+
+        List<WalkbyMessage> matches = new ArrayList<WalkbyMessage>();
+
+        for(WalkbyMessage currentMessage : messages) {
+            if(currentMessage == null) {
+                throw new Exception("currentMessage is null!");
+            }
+            if(currentMessage.getConversationId().equals(conversationId)) {
+                matches.add(currentMessage);
+            }
+        }
+
+        return matches;
+    }
+
+
+
+    @ApiMethod(
+            name = "insertMessage",
+            path = "walkbyMessages",
+            httpMethod = ApiMethod.HttpMethod.PUT)
+    public WalkbyMessage insertMessage(WalkbyMessage message) {
+        ofy().save().entity(message).now();
+        return ofy().load().entity(message).now();
+    }
+
+    @ApiMethod(
+            name = "listMessages",
+            path = "walkbyMessage",
+            httpMethod = ApiMethod.HttpMethod.GET)
+    public CollectionResponse<WalkbyMessage> listMessages(@Nullable @Named("cursor") String cursor, @Nullable @Named("limit") Integer limit) {
+        limit = limit == null ? DEFAULT_LIST_LIMIT : limit;
+        Query<WalkbyMessage> query = ofy().load().type(WalkbyMessage.class).limit(limit);
+        if (cursor != null) {
+            query = query.startAt(Cursor.fromWebSafeString(cursor));
+        }
+        QueryResultIterator<WalkbyMessage> queryIterator = query.iterator();
+        List<WalkbyMessage> walkbyMessageList = new ArrayList<WalkbyMessage>(limit);
+        while (queryIterator.hasNext()) {
+            walkbyMessageList.add(queryIterator.next());
+        }
+        return CollectionResponse.<WalkbyMessage>builder().setItems(walkbyMessageList).setNextPageToken(queryIterator.getCursor().toWebSafeString()).build();
+    }
+
+
+    private void checkExistsConversation(Long id) throws NotFoundException {
+        try {
+            ofy().load().type(WalkbyConversation.class).id(id).safe();
+        } catch (com.googlecode.objectify.NotFoundException e) {
+            throw new NotFoundException("Could not find WalkbyConversation with ID: " + id);
         }
     }
 

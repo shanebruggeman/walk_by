@@ -55,5 +55,10 @@
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="title_activity_authentication">AuthenticationActivity</string>
     <string name="title_activity_achievement_map">AchievementMapActivity</string>
+    <string name="search">Search</string>
+    <string name="title_activity_conversation_messages_view">ConversationMessagesView</string>
+    <string name="conversations">Conversations</string>
+    <string name="submit">Submit</string>
+    <string name="title_activity_activity_messages">Activity_messages</string>
 
 </resources>

@@ -64,7 +64,7 @@ public class WalkbyBluetoothManager implements UserMacAddressCallback {
     //handles the finding and discovery of other walkby users
     private boolean findDiscoverables() {
         Set<BluetoothDevice> visibleDevices = mBluetoothAdapter.getBondedDevices();
-        Log.d(LoginActivity.DEBUG_KEY, "My mac address is: " + mBluetoothAdapter.getAddress());
+        //Log.d(LoginActivity.DEBUG_KEY, "My mac address is: " + mBluetoothAdapter.getAddress());
 
         //make sure our own mac address is in the system
         if(!selfAdded) {
@@ -80,13 +80,13 @@ public class WalkbyBluetoothManager implements UserMacAddressCallback {
 
             //should reduce the number of async calls to add encounters
             if(!recentlyEncounteredMacs.contains(macAddress)) {
-                Log.d(LoginActivity.DEBUG_KEY, "Registering encounter with " + macAddress);
+                //Log.d(LoginActivity.DEBUG_KEY, "Registering encounter with " + macAddress);
                 recentlyEncounteredMacs.add(macAddress);
                 (new UserAddMacAddressAsyncTask()).execute(username, macAddress);
             }
         }
 
-        Log.d(LoginActivity.DEBUG_KEY,"Around me there are " + visibleDevices.size() + " visible devices");
+        //Log.d(LoginActivity.DEBUG_KEY,"Around me there are " + visibleDevices.size() + " visible devices");
 
         return (visibleDevices.size() > 0);
     }

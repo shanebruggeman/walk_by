@@ -5,20 +5,6 @@
     android:layout_height="match_parent" >
 
     <Button
-        android:id="@+id/navigation_recently_passed_button"
-        android:text="@string/recently_passed"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <Button
-        android:id="@+id/navigation_achievements_list_button"
-        android:text="@string/achievements"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <Button
         android:id="@+id/navigation_messages_button"
         android:text="@string/messages"
         android:layout_weight="1"

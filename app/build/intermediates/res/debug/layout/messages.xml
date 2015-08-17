@@ -1,34 +1,55 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/login_background_color"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
     <TextView
+        android:id="@+id/messages_title_text"
         android:text="@string/messages"
         android:textSize="40sp"
-        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:text="@string/tori"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_below="@id/messages_title_text"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="fill_parent">
 
-    <Button
-        android:text="@string/luke"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        <ListView
+            android:layout_below="@id/messages_title_text"
+            android:id="@+id/messages_list_view"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent" >
+        </ListView>
 
-    <Button
-        android:text="@string/scott"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
 
-    <Button
-        android:text="@string/alex"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout><!-- From: file:/Users/shane.bruggeman/AndroidDev/walk_by/app/src/main/res/layout/messages.xml -->
+        <LinearLayout
+            android:layout_marginBottom="0dp"
+            android:layout_width="fill_parent"
+            android:background="@color/message_box_color"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/message_input"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:background="#555"
+                android:layout_height="50dp" />
+
+            <Button
+                android:id="@+id/message_send"
+                android:text="@string/send"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout><!-- From: file:/Users/shane.bruggeman/AndroidDev/walk_by/app/src/main/res/layout/messages.xml -->

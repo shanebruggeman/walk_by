@@ -27,6 +27,7 @@ public class InsertUserAsyncTask extends AsyncTask<String, Void, Void> {
         String username = params[0];
         String password = params[1];
         String macAddress = params[2];
+        String country = params[3];
 
         try {
             Log.d(LoginActivity.DEBUG_KEY, "Inserting " + username + ", " + password + ", " + macAddress);
@@ -34,6 +35,7 @@ public class InsertUserAsyncTask extends AsyncTask<String, Void, Void> {
             inserted.setUsername(username);
             inserted.setPassword(password);
             inserted.setMacAddress(macAddress);
+            inserted.setCountry(country);
             myApiService.insert(inserted).execute();
             if(false) {
                 throw new IOException("Yep");

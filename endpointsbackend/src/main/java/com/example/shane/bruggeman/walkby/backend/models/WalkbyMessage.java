@@ -15,7 +15,7 @@ public class WalkbyMessage {
     Long starterId;
     Long receiverId;
 
-    String message;
+    String message = "";
 
     public Long getConversationId() {
         return conversationId;

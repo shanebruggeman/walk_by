@@ -1,10 +1,12 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:2:1
+	xmlns:tools
+		ADDED from AndroidManifest.xml:3:5
 	xmlns:android
 		ADDED from AndroidManifest.xml:2:11
 	package
-		ADDED from AndroidManifest.xml:3:5
+		ADDED from AndroidManifest.xml:4:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 	android:versionName
@@ -14,11 +16,11 @@ ADDED from AndroidManifest.xml:2:1
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 uses-permission#android.permission.BLUETOOTH
-ADDED from AndroidManifest.xml:5:5
-	android:name
-		ADDED from AndroidManifest.xml:5:22
-uses-permission#android.permission.INTERNET
 ADDED from AndroidManifest.xml:6:5
+	android:name
+		ADDED from AndroidManifest.xml:6:22
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:7:5
 MERGED from com.google.android.gms:play-services-ads:7.5.0:20:5
 MERGED from com.google.android.gms:play-services-analytics:7.5.0:21:5
 MERGED from com.google.android.gms:play-services-analytics:7.5.0:21:5
@@ -29,9 +31,9 @@ MERGED from com.google.android.gms:play-services-maps:7.5.0:21:5
 MERGED from com.google.android.gms:play-services-wallet:7.5.0:20:5
 MERGED from com.google.android.gms:play-services-maps:7.5.0:21:5
 	android:name
-		ADDED from AndroidManifest.xml:6:22
+		ADDED from AndroidManifest.xml:7:22
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from AndroidManifest.xml:7:5
+ADDED from AndroidManifest.xml:8:5
 MERGED from com.google.android.gms:play-services-ads:7.5.0:21:5
 MERGED from com.google.android.gms:play-services-analytics:7.5.0:22:5
 MERGED from com.google.android.gms:play-services-analytics:7.5.0:22:5
@@ -41,37 +43,41 @@ MERGED from com.google.android.gms:play-services-maps:7.5.0:20:5
 MERGED from com.google.android.gms:play-services-nearby:7.5.0:19:5
 MERGED from com.google.android.gms:play-services-maps:7.5.0:20:5
 	android:name
-		ADDED from AndroidManifest.xml:7:22
+		ADDED from AndroidManifest.xml:8:22
 uses-permission#android.permission.GET_ACCOUNTS
-ADDED from AndroidManifest.xml:8:5
+ADDED from AndroidManifest.xml:9:5
 MERGED from com.google.android.gms:play-services-wallet:7.5.0:21:5
 	android:name
-		ADDED from AndroidManifest.xml:8:22
+		ADDED from AndroidManifest.xml:9:22
 uses-permission#android.permission.USE_CREDENTIALS
-ADDED from AndroidManifest.xml:9:5
+ADDED from AndroidManifest.xml:10:5
 MERGED from com.google.android.gms:play-services-wallet:7.5.0:22:5
 	android:name
-		ADDED from AndroidManifest.xml:9:22
-uses-permission#android.permission.WAKE_LOCK
-ADDED from AndroidManifest.xml:10:5
-	android:name
 		ADDED from AndroidManifest.xml:10:22
-uses-permission#com.google.android.c2dm.permission.RECEIVE
+uses-permission#android.permission.WAKE_LOCK
 ADDED from AndroidManifest.xml:11:5
 	android:name
 		ADDED from AndroidManifest.xml:11:22
-permission#edu.rosehulman.walkby.bruggess.permission.C2D_MESSAGE
+uses-permission#com.google.android.c2dm.permission.RECEIVE
+ADDED from AndroidManifest.xml:12:5
+	android:name
+		ADDED from AndroidManifest.xml:12:22
+uses-permission#android.permission.INTERACT_ACROSS_USERS_FULL
 ADDED from AndroidManifest.xml:13:5
+	android:name
+		ADDED from AndroidManifest.xml:13:22
+permission#edu.rosehulman.walkby.bruggess.permission.C2D_MESSAGE
+ADDED from AndroidManifest.xml:15:5
 	android:protectionLevel
-		ADDED from AndroidManifest.xml:15:9
+		ADDED from AndroidManifest.xml:17:9
 	android:name
-		ADDED from AndroidManifest.xml:14:9
+		ADDED from AndroidManifest.xml:16:9
 uses-permission#edu.rosehulman.walkby.bruggess.permission.C2D_MESSAGE
-ADDED from AndroidManifest.xml:17:5
-	android:name
-		ADDED from AndroidManifest.xml:17:22
-application
 ADDED from AndroidManifest.xml:19:5
+	android:name
+		ADDED from AndroidManifest.xml:19:22
+application
+ADDED from AndroidManifest.xml:21:5
 MERGED from com.android.support:appcompat-v7:22.2.1:22:5
 MERGED from com.android.support:support-v4:22.2.1:22:5
 MERGED from com.google.android.gms:play-services:7.5.0:19:5
@@ -158,112 +164,81 @@ MERGED from com.android.support:support-v4:22.2.1:22:5
 MERGED from com.google.android.gms:play-services-wearable:7.5.0:19:5
 MERGED from com.google.android.gms:play-services-base:7.5.0:20:5
 MERGED from com.android.support:support-v4:22.2.1:22:5
+MERGED from walk_by:countryPicker:unspecified:11:5
+MERGED from com.android.support:support-v4:22.2.1:22:5
 	android:label
-		ADDED from AndroidManifest.xml:22:9
+		ADDED from AndroidManifest.xml:24:9
 	android:allowBackup
-		ADDED from AndroidManifest.xml:20:9
+		ADDED from AndroidManifest.xml:22:9
 	android:icon
-		ADDED from AndroidManifest.xml:21:9
-	android:theme
 		ADDED from AndroidManifest.xml:23:9
-activity#edu.rosehulman.walkby.bruggess.NavigationActivity
-ADDED from AndroidManifest.xml:24:9
+		REJECTED from walk_by:countryPicker:unspecified:13:9
+	android:theme
+		ADDED from AndroidManifest.xml:25:9
+	tools:replace
+		ADDED from AndroidManifest.xml:27:9
+	android:name
+		ADDED from AndroidManifest.xml:26:9
+activity#edu.rosehulman.walkby.bruggess.Activity_Navigation
+ADDED from AndroidManifest.xml:28:9
 	android:label
-		ADDED from AndroidManifest.xml:26:13
-	android:name
-		ADDED from AndroidManifest.xml:25:13
-meta-data#com.google.android.geo.API_KEY
-ADDED from AndroidManifest.xml:29:9
-	android:name
 		ADDED from AndroidManifest.xml:30:13
-	android:value
-		ADDED from AndroidManifest.xml:31:13
-activity#edu.rosehulman.walkby.bruggess.RecentlyPassedActivity
+	android:name
+		ADDED from AndroidManifest.xml:29:13
+meta-data#com.google.android.geo.API_KEY
 ADDED from AndroidManifest.xml:33:9
-	android:label
-		ADDED from AndroidManifest.xml:35:13
 	android:name
 		ADDED from AndroidManifest.xml:34:13
-activity#edu.rosehulman.walkby.bruggess.AchievementsListActivity
+	android:value
+		ADDED from AndroidManifest.xml:35:13
+activity#edu.rosehulman.walkby.bruggess.conversation_components.Activity_Conversations
 ADDED from AndroidManifest.xml:37:9
 	android:label
 		ADDED from AndroidManifest.xml:39:13
 	android:name
 		ADDED from AndroidManifest.xml:38:13
-activity#edu.rosehulman.walkby.bruggess.MessagesActivity
+activity#edu.rosehulman.walkby.bruggess.InviteFriendsActivity
 ADDED from AndroidManifest.xml:41:9
 	android:label
 		ADDED from AndroidManifest.xml:43:13
 	android:name
 		ADDED from AndroidManifest.xml:42:13
-activity#edu.rosehulman.walkby.bruggess.InviteFriendsActivity
+activity#edu.rosehulman.walkby.bruggess.Activity_AccountSettings
 ADDED from AndroidManifest.xml:45:9
 	android:label
 		ADDED from AndroidManifest.xml:47:13
 	android:name
 		ADDED from AndroidManifest.xml:46:13
-activity#edu.rosehulman.walkby.bruggess.AccountSettingsActivity
+activity#edu.rosehulman.walkby.bruggess.LoginActivity
 ADDED from AndroidManifest.xml:49:9
 	android:label
 		ADDED from AndroidManifest.xml:51:13
 	android:name
 		ADDED from AndroidManifest.xml:50:13
-activity#edu.rosehulman.walkby.bruggess.LoginActivity
-ADDED from AndroidManifest.xml:53:9
-	android:label
-		ADDED from AndroidManifest.xml:55:13
-	android:name
-		ADDED from AndroidManifest.xml:54:13
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:56:13
+ADDED from AndroidManifest.xml:53:13
 action#android.intent.action.MAIN
-ADDED from AndroidManifest.xml:57:17
+ADDED from AndroidManifest.xml:54:17
 	android:name
-		ADDED from AndroidManifest.xml:57:25
+		ADDED from AndroidManifest.xml:54:25
 category#android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:59:17
+ADDED from AndroidManifest.xml:55:17
 	android:name
-		ADDED from AndroidManifest.xml:59:27
+		ADDED from AndroidManifest.xml:55:27
 activity#edu.rosehulman.walkby.bruggess.RegistrationActivity
+ADDED from AndroidManifest.xml:58:9
+	android:label
+		ADDED from AndroidManifest.xml:60:13
+	android:name
+		ADDED from AndroidManifest.xml:59:13
+activity#edu.rosehulman.walkby.bruggess.Activity_AchievementMap
 ADDED from AndroidManifest.xml:62:9
 	android:label
 		ADDED from AndroidManifest.xml:64:13
 	android:name
 		ADDED from AndroidManifest.xml:63:13
-activity#edu.rosehulman.walkby.bruggess.AuthenticationActivity
-ADDED from AndroidManifest.xml:66:9
-	android:label
-		ADDED from AndroidManifest.xml:68:13
-	android:name
-		ADDED from AndroidManifest.xml:67:13
-activity#edu.rosehulman.walkby.bruggess.AchievementMapActivity
-ADDED from AndroidManifest.xml:70:9
-	android:label
-		ADDED from AndroidManifest.xml:72:13
-	android:name
-		ADDED from AndroidManifest.xml:71:13
-receiver#edu.rosehulman.walkby.bruggess.GcmReceiver
-ADDED from AndroidManifest.xml:75:9
-	android:permission
-		ADDED from AndroidManifest.xml:77:13
-	android:name
-		ADDED from AndroidManifest.xml:76:13
-intent-filter#com.google.android.c2dm.intent.RECEIVE+edu.rosehulman.walkby.bruggess
-ADDED from AndroidManifest.xml:78:13
-action#com.google.android.c2dm.intent.RECEIVE
-ADDED from AndroidManifest.xml:79:17
-	android:name
-		ADDED from AndroidManifest.xml:79:25
-category#edu.rosehulman.walkby.bruggess
-ADDED from AndroidManifest.xml:81:17
-	android:name
-		ADDED from AndroidManifest.xml:81:27
-service#edu.rosehulman.walkby.bruggess.GcmMessageHandler
-ADDED from AndroidManifest.xml:85:9
-	android:name
-		ADDED from AndroidManifest.xml:85:18
 meta-data#com.google.android.gms.version
-ADDED from AndroidManifest.xml:87:9
+ADDED from AndroidManifest.xml:67:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
@@ -292,11 +267,18 @@ MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
 	android:name
-		ADDED from AndroidManifest.xml:88:13
+		ADDED from AndroidManifest.xml:68:13
 	android:value
-		ADDED from AndroidManifest.xml:89:13
+		ADDED from AndroidManifest.xml:69:13
+activity#edu.rosehulman.walkby.bruggess.message_components.Activity_messages
+ADDED from AndroidManifest.xml:71:9
+	android:label
+		ADDED from AndroidManifest.xml:73:13
+	android:name
+		ADDED from AndroidManifest.xml:72:13
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
+MERGED from com.android.support:multidex:1.0.1:18:5
 MERGED from com.android.support:appcompat-v7:22.2.1:20:5
 MERGED from com.android.support:support-v4:22.2.1:20:5
 MERGED from com.google.android.gms:play-services:7.5.0:18:5
@@ -382,6 +364,8 @@ MERGED from com.google.android.gms:play-services-base:7.5.0:18:5
 MERGED from com.android.support:support-v4:22.2.1:20:5
 MERGED from com.google.android.gms:play-services-wearable:7.5.0:18:5
 MERGED from com.google.android.gms:play-services-base:7.5.0:18:5
+MERGED from com.android.support:support-v4:22.2.1:20:5
+MERGED from walk_by:countryPicker:unspecified:7:5
 MERGED from com.android.support:support-v4:22.2.1:20:5
 	android:targetSdkVersion
 		INJECTED from AndroidManifest.xml:0:0

@@ -33,7 +33,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/authentication_code"
+            android:id="@+id/email_friend_edit_text"
             android:hint="@string/email_placeholder"
             android:textColorHint="@color/login_text_color"
             android:textSize="25sp"
@@ -47,7 +47,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/registration_button"
+        android:id="@+id/email_friend_send_button"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"

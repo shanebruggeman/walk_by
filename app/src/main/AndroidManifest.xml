@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="edu.rosehulman.walkby.bruggess" >
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -9,6 +10,7 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
     <permission
         android:name="edu.rosehulman.walkby.bruggess.permission.C2D_MESSAGE"
@@ -20,9 +22,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:name="android.support.multidex.MultiDexApplication"
+        tools:replace="android:icon" >
         <activity
-            android:name=".NavigationActivity"
+            android:name=".Activity_Navigation"
             android:label="@string/app_name" >
         </activity>
 
@@ -31,15 +35,7 @@
             android:value="AIzaSyCEVMM61Vk0dXZt5ItDjAFYuvjuvkt6m-0" />
 
         <activity
-            android:name=".RecentlyPassedActivity"
-            android:label="@string/title_activity_recently_passed" >
-        </activity>
-        <activity
-            android:name=".AchievementsListActivity"
-            android:label="@string/title_activity_achievements_list" >
-        </activity>
-        <activity
-            android:name=".MessagesActivity"
+            android:name=".conversation_components.Activity_Conversations"
             android:label="@string/title_activity_messages" >
         </activity>
         <activity
@@ -47,15 +43,15 @@
             android:label="@string/title_activity_invite_friends" >
         </activity>
         <activity
-            android:name=".AccountSettingsActivity"
+            android:name=".Activity_AccountSettings"
             android:label="@string/title_activity_account_settings" >
         </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -64,29 +60,18 @@
             android:label="@string/title_activity_registration" >
         </activity>
         <activity
-            android:name=".AuthenticationActivity"
-            android:label="@string/title_activity_authentication" >
-        </activity>
-        <activity
-            android:name=".AchievementMapActivity"
+            android:name=".Activity_AchievementMap"
             android:label="@string/title_activity_achievement_map" >
         </activity>
-
-        <receiver
-            android:name=".GcmReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
-                <category android:name="edu.rosehulman.walkby.bruggess" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name=".GcmMessageHandler" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".message_components.Activity_messages"
+            android:label="@string/title_activity_activity_messages" >
+        </activity>
     </application>
 
 </manifest>

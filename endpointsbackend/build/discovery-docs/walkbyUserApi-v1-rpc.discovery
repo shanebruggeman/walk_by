@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/eIlI6tnkS7eBuZWaVSHh0Xt5_IM\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/y0vM3Ag42ilBZjAmIKFYg01jRJY\"",
  "discoveryVersion": "v1",
  "id": "walkbyUserApi:v1",
  "name": "walkbyUserApi",
@@ -71,10 +71,116 @@
   }
  },
  "schemas": {
+  "CollectionResponse_WalkbyConversation": {
+   "id": "CollectionResponse_WalkbyConversation",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "WalkbyConversation"
+     }
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  },
+  "CollectionResponse_WalkbyMessage": {
+   "id": "CollectionResponse_WalkbyMessage",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "WalkbyMessage"
+     }
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  },
+  "WalkbyConversation": {
+   "id": "WalkbyConversation",
+   "type": "object",
+   "properties": {
+    "conversationReceiverId": {
+     "type": "string",
+     "format": "int64"
+    },
+    "conversationStarterId": {
+     "type": "string",
+     "format": "int64"
+    },
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "messages": {
+     "type": "array",
+     "items": {
+      "$ref": "WalkbyMessage"
+     }
+    }
+   }
+  },
+  "WalkbyConversationCollection": {
+   "id": "WalkbyConversationCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "WalkbyConversation"
+     }
+    }
+   }
+  },
+  "WalkbyMessage": {
+   "id": "WalkbyMessage",
+   "type": "object",
+   "properties": {
+    "conversationId": {
+     "type": "string",
+     "format": "int64"
+    },
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "message": {
+     "type": "string"
+    },
+    "receiverId": {
+     "type": "string",
+     "format": "int64"
+    },
+    "starterId": {
+     "type": "string",
+     "format": "int64"
+    }
+   }
+  },
+  "WalkbyMessageCollection": {
+   "id": "WalkbyMessageCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "WalkbyMessage"
+     }
+    }
+   }
+  },
   "WalkbyUser": {
    "id": "WalkbyUser",
    "type": "object",
    "properties": {
+    "country": {
+     "type": "string"
+    },
     "encounteredMacAddresses": {
      "type": "array",
      "items": {
@@ -199,6 +305,46 @@
     "https://www.googleapis.com/auth/userinfo.email"
    ]
   },
+  "walkbyUserApi.getConversation": {
+   "id": "walkbyUserApi.getConversation",
+   "allowGet": true,
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "format": "int64"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "returns": {
+    "$ref": "WalkbyConversation"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.getConversationMessages": {
+   "id": "walkbyUserApi.getConversationMessages",
+   "allowGet": true,
+   "parameters": {
+    "conversationId": {
+     "type": "string",
+     "required": true,
+     "format": "int64"
+    }
+   },
+   "parameterOrder": [
+    "conversationId"
+   ],
+   "returns": {
+    "$ref": "WalkbyMessageCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "walkbyUserApi.getEncounteredUsers": {
    "id": "walkbyUserApi.getEncounteredUsers",
    "parameters": {
@@ -217,6 +363,25 @@
     "https://www.googleapis.com/auth/userinfo.email"
    ]
   },
+  "walkbyUserApi.getUserConversations": {
+   "id": "walkbyUserApi.getUserConversations",
+   "allowGet": true,
+   "parameters": {
+    "username": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "username"
+   ],
+   "returns": {
+    "$ref": "WalkbyConversationCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "walkbyUserApi.insert": {
    "id": "walkbyUserApi.insert",
    "parameters": {
@@ -229,6 +394,40 @@
    ],
    "returns": {
     "$ref": "WalkbyUser"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.insertConversation": {
+   "id": "walkbyUserApi.insertConversation",
+   "parameters": {
+    "resource": {
+     "$ref": "WalkbyConversation"
+    }
+   },
+   "parameterOrder": [
+    "resource"
+   ],
+   "returns": {
+    "$ref": "WalkbyConversation"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.insertMessage": {
+   "id": "walkbyUserApi.insertMessage",
+   "parameters": {
+    "resource": {
+     "$ref": "WalkbyMessage"
+    }
+   },
+   "parameterOrder": [
+    "resource"
+   ],
+   "returns": {
+    "$ref": "WalkbyMessage"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
@@ -253,10 +452,51 @@
     "https://www.googleapis.com/auth/userinfo.email"
    ]
   },
+  "walkbyUserApi.listConversations": {
+   "id": "walkbyUserApi.listConversations",
+   "allowGet": true,
+   "parameters": {
+    "cursor": {
+     "type": "string"
+    },
+    "limit": {
+     "type": "integer",
+     "format": "int32"
+    }
+   },
+   "returns": {
+    "$ref": "CollectionResponse_WalkbyConversation"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.listMessages": {
+   "id": "walkbyUserApi.listMessages",
+   "allowGet": true,
+   "parameters": {
+    "cursor": {
+     "type": "string"
+    },
+    "limit": {
+     "type": "integer",
+     "format": "int32"
+    }
+   },
+   "returns": {
+    "$ref": "CollectionResponse_WalkbyMessage"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "walkbyUserApi.patch": {
    "id": "walkbyUserApi.patch",
    "supportsPatch": true,
    "parameters": {
+    "country": {
+     "type": "string"
+    },
     "encounteredMacAddresses": {
      "type": "array",
      "items": {
@@ -303,6 +543,22 @@
     "https://www.googleapis.com/auth/userinfo.email"
    ]
   },
+  "walkbyUserApi.removeConversation": {
+   "id": "walkbyUserApi.removeConversation",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "format": "int64"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "walkbyUserApi.update": {
    "id": "walkbyUserApi.update",
    "parameters": {
@@ -321,6 +577,29 @@
    ],
    "returns": {
     "$ref": "WalkbyUser"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "walkbyUserApi.updateConversation": {
+   "id": "walkbyUserApi.updateConversation",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "format": "int64"
+    },
+    "resource": {
+     "$ref": "WalkbyConversation"
+    }
+   },
+   "parameterOrder": [
+    "resource",
+    "id"
+   ],
+   "returns": {
+    "$ref": "WalkbyConversation"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
