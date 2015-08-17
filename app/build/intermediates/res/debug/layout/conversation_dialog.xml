@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/new_conversation_edit_text"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="200dp"
+        android:hint="@string/username_placeholder"
+        android:gravity="center"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/submit_new_conversation_button"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/new_conversation_edit_text"
+        android:layout_centerHorizontal="true"
+        android:text="@string/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout><!-- From: file:/Users/shane.bruggeman/AndroidDev/walk_by/app/src/main/res/layout/conversation_dialog.xml -->

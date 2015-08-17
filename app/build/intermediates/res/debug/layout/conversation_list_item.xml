@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/last_message_text"
+        android:layout_weight="5"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp" />
+    <TextView
+        android:id="@+id/other_username"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp" />
+
+</LinearLayout><!-- From: file:/Users/shane.bruggeman/AndroidDev/walk_by/app/src/main/res/layout/conversation_list_item.xml -->
